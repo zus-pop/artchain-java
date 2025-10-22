@@ -39,6 +39,12 @@
             android:name=".ui.competitor.UploadActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.competitor.MySubmissionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.competitor.SubmissionDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.examiner.ExaminerActivity"
             android:exported="false" />
         <provider

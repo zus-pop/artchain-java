@@ -126,14 +126,19 @@ public class ContestDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_logout) {
-            logout();
+        if (item.getItemId() == R.id.menu_my_submissions) {
+            openMySubmissions();
             return true;
-        } else if (item.getItemId() == android.R.id.home) {
-            getOnBackPressedDispatcher().onBackPressed();
+        } else if (item.getItemId() == R.id.menu_logout) {
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openMySubmissions() {
+        Intent intent = new Intent(this, MySubmissionsActivity.class);
+        startActivity(intent);
     }
 
     private void logout() {

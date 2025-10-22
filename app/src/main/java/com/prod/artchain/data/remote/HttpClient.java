@@ -28,9 +28,9 @@ public class HttpClient {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
         defaultHeaders = new HashMap<>();
         // Set default headers, e.g., Content-Type

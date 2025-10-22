@@ -129,37 +129,6 @@ public class SubmissionApiService {
         });
     }
 
-    public void submitAsync(String contestId, String imageUrl, SubmissionCallback callback) {
-        try {
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("contestId", contestId);
-            jsonBody.put("imageUrl", imageUrl);
-
-            HttpClient.getInstance().post("/painting/upload", jsonBody, new HttpClient.HttpCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    // Assuming the response is the created submission
-                    try {
-                        JSONObject json = new JSONObject(response);
-                        Submission submission = parseSubmissionFromJson(json);
-                        List<Submission> submissions = new ArrayList<>();
-                        submissions.add(submission);
-                        callback.onSuccess(submissions);
-                    } catch (Exception e) {
-                        callback.onError(new Exception("Failed to parse submission: " + e.getMessage(), e));
-                    }
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    callback.onError(e);
-                }
-            });
-        } catch (Exception e) {
-            callback.onError(e);
-        }
-    }
-
     public void uploadAsync(String competitorId, String title, String description, String contestId, String roundId, File file, SubmissionCallback callback) {
         Map<String, String> textParts = new HashMap<>();
         textParts.put("competitorId", competitorId);

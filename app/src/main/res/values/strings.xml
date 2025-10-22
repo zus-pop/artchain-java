@@ -9,4 +9,23 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- Submission item strings -->
+    <string name="submission_image_desc">Submission image</string>
+    <string name="submission_title_default">Submission Title</string>
+    <string name="contest_title_default">Contest: Contest Title</string>
+    <string name="contest_label">Contest: %1$s</string>
+    <string name="no_description">No description</string>
+    <string name="status_label">Status: %1$s</string>
+    <string name="submitted_format">Submitted: %1$s</string>
+    <string name="n_a">N/A</string>
+
+    <!-- Evaluation strings -->
+    <string name="evaluations">Evaluations</string>
+    <string name="examiner_name">Examiner</string>
+    <string name="score_label">Score: %1$d</string>
+    <string name="feedback_label">Feedback: %1$s</string>
+    <string name="evaluation_date">Evaluation Date</string>
+    <string name="no_feedback">No feedback</string>
+    <string name="evaluated_on">Evaluated on: %1$s</string>
 </resources>

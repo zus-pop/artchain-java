@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Builder
@@ -16,7 +17,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Submission {
+public class Submission implements Serializable {
     private String paintingId;
     private String roundId;
     private String awardId;
