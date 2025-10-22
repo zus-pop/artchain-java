@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class LoginApiService {
+public class AuthApiService {
     public interface LoginCallback {
         void onSuccess(LoggedInUser user);
 
@@ -22,13 +22,13 @@ public class LoginApiService {
     }
 
     // Singleton instance for reusability
-    private static LoginApiService instance;
+    private static AuthApiService instance;
 
-    private LoginApiService() {
+    private AuthApiService() {
     }
 
-    public static LoginApiService getInstance() {
-        if (instance == null) instance = new LoginApiService();
+    public static AuthApiService getInstance() {
+        if (instance == null) instance = new AuthApiService();
         return instance;
     }
 
@@ -39,10 +39,8 @@ public class LoginApiService {
         String phone = json.optString("phone", null);
         String birthdayStr = json.optString("birthday", null);
         Date birthday = null;
-        if (birthdayStr != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            birthday = sdf.parse(birthdayStr);
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        birthday = sdf.parse(birthdayStr);
         String ward = json.optString("ward", null);
         String grade = json.optString("grade", null);
         String roleStr = json.optString("role", null);
@@ -52,7 +50,17 @@ public class LoginApiService {
         } catch (IllegalArgumentException e) {
             Log.d("Error role", Objects.requireNonNull(e.getMessage()));
         }
-        return new LoggedInUser(userId, fullName, email, phone, birthday, ward, grade, role, accessToken);
+        return LoggedInUser.builder()
+                .userId(userId)
+                .fullName(fullName)
+                .email(email)
+                .phone(phone)
+                .birthday(birthday)
+                .ward(ward)
+                .grade(grade)
+                .role(role)
+                .accessToken(accessToken)
+                .build();
     }
 
     public void loginAsync(String username, String password, LoginCallback callback) {

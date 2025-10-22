@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 import com.prod.artchain.MainActivity;
 import com.prod.artchain.databinding.ActivityLoginBinding;
-import com.prod.artchain.data.service.LoginApiService;
+import com.prod.artchain.data.service.AuthApiService;
 import com.prod.artchain.data.local.TokenManager;
 import com.prod.artchain.data.model.LoggedInUser;
 import com.prod.artchain.data.remote.HttpClient;
@@ -69,13 +70,12 @@ public class LoginActivity extends AppCompatActivity {
         updateLoginButtonState();
 
         loginButton.setOnClickListener(v -> {
-
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             loadingProgressBar.setVisibility(ProgressBar.VISIBLE);
             loginButton.setEnabled(false);
             isLoading = true;
-            LoginApiService.getInstance().loginAsync(username, password, new LoginApiService.LoginCallback() {
+            AuthApiService.getInstance().loginAsync(username, password, new AuthApiService.LoginCallback() {
                 @Override
                 public void onSuccess(LoggedInUser user) {
                     runOnUiThread(() -> {

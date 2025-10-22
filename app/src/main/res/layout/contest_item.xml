@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/contestBanner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/contestDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contest Description"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/contestDates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start: 2023-01-01 - End: 2023-01-31"
+        android:textSize="12sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/contestStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: Active"
+        android:textSize="12sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>

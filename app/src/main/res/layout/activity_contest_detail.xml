@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/contestDetailBanner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/contestDetailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contest Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/contestDetailDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contest Description"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/contestDetailDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start: 2023-01-01 - End: 2023-01-31"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/contestDetailStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Active"
+            android:textSize="14sp"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/contestDetailNumAwards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Awards: 3"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/participateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Participate"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/holo_blue_bright"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>
