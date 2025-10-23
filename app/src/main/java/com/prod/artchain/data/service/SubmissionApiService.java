@@ -129,6 +129,31 @@ public class SubmissionApiService {
         });
     }
 
+    public void getSubmissionsByContestIdAsync(String contestId, SubmissionCallback callback) {
+        HttpClient.getInstance().get("/paintings?contestId=" + contestId, new HttpClient.HttpCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<Submission> submissions = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject json = jsonArray.getJSONObject(i);
+                        Submission submission = parseSubmissionFromJson(json);
+                        submissions.add(submission);
+                    }
+                    callback.onSuccess(submissions);
+                } catch (Exception e) {
+                    callback.onError(new Exception("Failed to parse submissions: " + e.getMessage(), e));
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+            }
+        });
+    }
+
     public void uploadAsync(String competitorId, String title, String description, String contestId, String roundId, File file, SubmissionCallback callback) {
         Map<String, String> textParts = new HashMap<>();
         textParts.put("competitorId", competitorId);

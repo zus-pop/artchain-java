@@ -11,7 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"
+        android:contentDescription="Contest banner" />
+
+    <TextView
+        android:id="@+id/contestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contest Title"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/contestDescription"
@@ -20,15 +31,15 @@
         android:text="Contest Description"
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:id="@+id/contestDates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start: 2023-01-01 - End: 2023-01-31"
+        android:text="Start: 2023-01-01 - End: 2023-12-31"
         android:textSize="12sp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/darker_gray"
         android:layout_marginTop="4dp" />
 
     <TextView

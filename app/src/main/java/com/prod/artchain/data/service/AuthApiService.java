@@ -39,8 +39,10 @@ public class AuthApiService {
         String phone = json.optString("phone", null);
         String birthdayStr = json.optString("birthday", null);
         Date birthday = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        birthday = sdf.parse(birthdayStr);
+        if (birthdayStr != null && !birthdayStr.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            birthday = sdf.parse(birthdayStr);
+        }
         String ward = json.optString("ward", null);
         String grade = json.optString("grade", null);
         String roleStr = json.optString("role", null);

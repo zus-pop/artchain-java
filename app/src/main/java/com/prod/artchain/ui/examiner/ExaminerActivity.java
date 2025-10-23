@@ -4,15 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.prod.artchain.R;
+import com.prod.artchain.data.model.Contest;
 import com.prod.artchain.data.model.Submission;
 import com.prod.artchain.data.remote.HttpClient;
+import com.prod.artchain.data.service.ContestApiService;
 import com.prod.artchain.data.service.SubmissionApiService;
 import com.prod.artchain.ui.login.LoginActivity;
 import com.prod.artchain.data.local.TokenManager;
@@ -21,7 +22,8 @@ import java.util.List;
 
 public class ExaminerActivity extends AppCompatActivity {
 
-    private ListView submissionListView;
+    private ListView listView;
+    private List<Contest> contests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,12 @@ public class ExaminerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_examiner);
 
         // Set title
-        setTitle("Submissions");
+        setTitle("Contests to Evaluate");
+
+        // Enable back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Set auth handler for token expiration
         HttpClient.getInstance().setAuthHandler(() -> {
@@ -43,9 +50,14 @@ public class ExaminerActivity extends AppCompatActivity {
             });
         });
 
-        submissionListView = findViewById(R.id.submissionListView);
+        listView = findViewById(R.id.submissionListView);
 
-        loadSubmissions();
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Contest selectedContest = contests.get(position);
+            loadSubmissionsForContest(selectedContest.getContestId());
+        });
+
+        loadContests();
     }
 
     @Override
@@ -56,6 +68,12 @@ public class ExaminerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Handle back button
+            loadContests();
+            setTitle("Contests to Evaluate");
+            return true;
+        }
         if (item.getItemId() == R.id.menu_logout) {
             logout();
             return true;
@@ -74,14 +92,35 @@ public class ExaminerActivity extends AppCompatActivity {
         finish();
     }
 
-    private void loadSubmissions() {
-        SubmissionApiService.getInstance().getSubmissionsAsync(new SubmissionApiService.SubmissionCallback() {
+    private void loadContests() {
+        String examinerId = TokenManager.getInstance(this).getUser().getUserId();
+        ContestApiService.getInstance().getContestsByExaminerIdAsync(examinerId, new ContestApiService.ContestCallback() {
+            @Override
+            public void onSuccess(List<Contest> contestList) {
+                contests = contestList;
+                runOnUiThread(() -> {
+                    ContestAdapter adapter = new ContestAdapter(ExaminerActivity.this, contests);
+                    listView.setAdapter(adapter);
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(ExaminerActivity.this, "Failed to load contests: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+            }
+        });
+    }
+
+    private void loadSubmissionsForContest(String contestId) {
+        SubmissionApiService.getInstance().getSubmissionsByContestIdAsync(contestId, new SubmissionApiService.SubmissionCallback() {
             @Override
             public void onSuccess(List<Submission> submissions) {
                 runOnUiThread(() -> {
-                    ArrayAdapter<Submission> adapter = new ArrayAdapter<>(ExaminerActivity.this,
-                            android.R.layout.simple_list_item_1, submissions);
-                    submissionListView.setAdapter(adapter);
+                    SubmissionAdapter adapter = new SubmissionAdapter(ExaminerActivity.this, submissions);
+                    listView.setAdapter(adapter);
+                    setTitle("Submissions for Contest");
                 });
             }
 

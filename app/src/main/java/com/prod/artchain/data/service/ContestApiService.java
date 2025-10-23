@@ -107,4 +107,30 @@ public class ContestApiService {
             }
         });
     }
+
+    public void getContestsByExaminerIdAsync(String examinerId, ContestCallback callback) {
+        HttpClient.getInstance().get("/contests/examiner/" + examinerId, new HttpClient.HttpCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject responseObj = new JSONObject(response);
+                    JSONArray jsonArray = responseObj.getJSONArray("data");
+                    List<Contest> contests = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject json = jsonArray.getJSONObject(i);
+                        Contest contest = parseContestFromJson(json);
+                        contests.add(contest);
+                    }
+                    callback.onSuccess(contests);
+                } catch (Exception e) {
+                    callback.onError(new Exception("Failed to parse contests: " + e.getMessage(), e));
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+            }
+        });
+    }
 }

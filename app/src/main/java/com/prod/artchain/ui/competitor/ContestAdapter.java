@@ -62,6 +62,10 @@ public class ContestAdapter extends BaseAdapter {
             banner.setImageResource(android.R.color.transparent); // Or set a placeholder
         }
 
+        // Set title if available
+        TextView title = convertView.findViewById(R.id.contestTitle);
+        title.setText(contest.getTitle() != null ? contest.getTitle() : "Contest Title");
+
         description.setText(contest.getDescription());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
