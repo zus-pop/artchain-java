@@ -58,13 +58,22 @@ public class TokenManager {
         String ward = prefs.getString("ward", null);
         String grade = prefs.getString("grade", null);
         String roleStr = prefs.getString("role", null);
+        String schoolName = prefs.getString("schoolName", null);
         UserRole role = null;
         try {
             role = UserRole.valueOf(roleStr);
         } catch (Exception e) {
             // ignore
         }
-        return new LoggedInUser(userId, fullName, email, null, null, ward, grade, role, null);
+        return LoggedInUser.builder()
+                .userId(userId)
+                .fullName(fullName)
+                .email(email)
+                .ward(ward)
+                .grade(grade)
+                .schoolName(schoolName)
+                .role(role)
+                .build();
     }
 
     public void clearToken() {

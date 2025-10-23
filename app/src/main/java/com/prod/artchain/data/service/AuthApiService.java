@@ -45,6 +45,7 @@ public class AuthApiService {
         }
         String ward = json.optString("ward", null);
         String grade = json.optString("grade", null);
+        String schoolName = json.optString("schoolName", null);
         String roleStr = json.optString("role", null);
         UserRole role = null;
         try {
@@ -60,6 +61,7 @@ public class AuthApiService {
                 .birthday(birthday)
                 .ward(ward)
                 .grade(grade)
+                .schoolName(schoolName)
                 .role(role)
                 .accessToken(accessToken)
                 .build();
@@ -129,3 +131,5 @@ public class AuthApiService {
         });
     }
 }
+
+

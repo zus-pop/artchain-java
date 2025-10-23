@@ -84,4 +84,33 @@ public class EvaluationApiService {
             }
         });
     }
+
+    public interface EvaluationCallback {
+        void onSuccess();
+        void onError(Exception e);
+    }
+
+    public void submitEvaluationAsync(String paintingId, String examinerId, int score, String feedback, EvaluationCallback callback) {
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("paintingId", paintingId);
+            jsonBody.put("examinerId", examinerId);
+            jsonBody.put("score", score);
+            jsonBody.put("feedback", feedback);
+
+            HttpClient.getInstance().post("/paintings/evaluate", jsonBody, new HttpClient.HttpCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    callback.onSuccess();
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    callback.onError(e);
+                }
+            });
+        } catch (Exception e) {
+            callback.onError(e);
+        }
+    }
 }

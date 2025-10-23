@@ -27,6 +27,7 @@ public class LoggedInUser {
     private Date birthday;
     private String ward;
     private String grade;
+    private String schoolName;
     private UserRole role;
     private String accessToken;
 }

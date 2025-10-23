@@ -121,6 +121,14 @@ public class ExaminerActivity extends AppCompatActivity {
                     SubmissionAdapter adapter = new SubmissionAdapter(ExaminerActivity.this, submissions);
                     listView.setAdapter(adapter);
                     setTitle("Submissions for Contest");
+
+                    // Set click listener for submissions
+                    listView.setOnItemClickListener((parent, view, position, id) -> {
+                        Submission selectedSubmission = submissions.get(position);
+                        Intent intent = new Intent(ExaminerActivity.this, EvaluationActivity.class);
+                        intent.putExtra(EvaluationActivity.EXTRA_SUBMISSION, selectedSubmission);
+                        startActivity(intent);
+                    });
                 });
             }
 
