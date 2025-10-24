@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_welcome"
+    tools:context=".ui.login.WelcomeActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" />
+
+    <TextView
+android:id="@+id/tv_welcome_title"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Chào mừng bạn đến với Artchain!"
+android:textSize="32sp"
+android:textColor="@android:color/white"
+android:textStyle="bold"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="100dp"
+android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="395dp"
+        android:layout_marginEnd="83dp"
+        android:layout_marginBottom="307dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Vuốt để tiếp tục > > >"
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
+
+    <ImageView
+android:id="@+id/iv_swipe_icon"
+android:layout_width="60dp"
+android:layout_height="60dp"
+android:layout_below="@id/tv_instruction"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="20dp"
+android:src="@drawable/ic_swipe_right"
+android:tint="@android:color/white"
+android:contentDescription="Swipe Right" />
+
+    </RelativeLayout>
