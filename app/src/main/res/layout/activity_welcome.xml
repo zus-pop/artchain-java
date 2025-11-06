@@ -29,12 +29,14 @@ android:gravity="center"/>
         android:id="@+id/tv_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="395dp"
-        android:layout_marginEnd="83dp"
-        android:layout_marginBottom="307dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="213dp"
+        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="489dp"
         android:gravity="center"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
@@ -42,15 +44,4 @@ android:gravity="center"/>
         android:textColor="@android:color/white"
         android:textSize="22sp" />
 
-    <ImageView
-android:id="@+id/iv_swipe_icon"
-android:layout_width="60dp"
-android:layout_height="60dp"
-android:layout_below="@id/tv_instruction"
-android:layout_centerHorizontal="true"
-android:layout_marginTop="20dp"
-android:src="@drawable/ic_swipe_right"
-android:tint="@android:color/white"
-android:contentDescription="Swipe Right" />
-
-    </RelativeLayout>
+</RelativeLayout>

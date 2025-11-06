@@ -24,8 +24,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        ivSwipeIcon = findViewById(R.id.iv_swipe_icon); // Ánh xạ ImageView từ layout
-
         // Khởi tạo và bắt đầu animation cho icon
         startSwipeAnimation();
     }

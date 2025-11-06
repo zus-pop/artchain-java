@@ -118,7 +118,7 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_lock"
             android:contentDescription="Lock"
-            android:tint="#E22B2B"/>
+            app:tint="#E22B2B"/>
 
         <EditText
             android:id="@+id/password"

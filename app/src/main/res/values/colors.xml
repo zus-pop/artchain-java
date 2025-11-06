@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="artchain_red_primary">#D32F2F</color>
+    <color name="artchain_grey_inactive">#757575</color>
 </resources>

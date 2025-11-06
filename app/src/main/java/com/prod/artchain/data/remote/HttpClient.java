@@ -35,7 +35,9 @@ public class HttpClient {
         defaultHeaders = new HashMap<>();
         // Set default headers, e.g., Content-Type
         defaultHeaders.put("Content-Type", "application/json");
-        this.baseUrl = "https://rflz4357-3001.asse.devtunnels.ms/api";
+        this.baseUrl = "https://513q6dp9-3000.asse.devtunnels.ms/api"; //hao
+//        this.baseUrl = "https://rflz4357-3001.asse.devtunnels.ms/api"; //hoang
+
     }
 
     public static HttpClient getInstance() {
