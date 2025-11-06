@@ -42,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
     private Spinner wardSpinner;
     private EditText gradeEditText;
     private TextView birthdayTextView;
-    private Spinner roleSpinner;
     private Button signUpButton;
     private ProgressBar loadingProgressBar;
     private TextView loginLink;
@@ -50,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageButton toggleConfirmPasswordVisibility;
 
     private Date selectedBirthday = null;
-    private String selectedRole = "";
+    private String selectedRole = "COMPETITOR"; // Default role
     private String selectedWard = "";
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
@@ -63,7 +62,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         initializeViews();
-        setupRoleSpinner();
         setupWardSpinner();
         setupDatePicker();
         setupPasswordToggle();
@@ -81,41 +79,11 @@ public class SignUpActivity extends AppCompatActivity {
         wardSpinner = findViewById(R.id.wardSpinner);
         gradeEditText = findViewById(R.id.grade);
         birthdayTextView = findViewById(R.id.birthday);
-        roleSpinner = findViewById(R.id.roleSpinner);
         signUpButton = findViewById(R.id.signUpButton);
         loadingProgressBar = findViewById(R.id.loading);
         loginLink = findViewById(R.id.loginLink);
         togglePasswordVisibility = findViewById(R.id.togglePasswordVisibility);
         toggleConfirmPasswordVisibility = findViewById(R.id.toggleConfirmPasswordVisibility);
-    }
-
-    private void setupRoleSpinner() {
-        String[] roles = {"COMPETITOR", "EXAMINER"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                roles
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        roleSpinner.setAdapter(adapter);
-        
-        // Set default selection to COMPETITOR (position 0)
-        roleSpinner.setSelection(0);
-        selectedRole = "COMPETITOR";
-
-        roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedRole = roles[position];
-                updateSignUpButtonState();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedRole = "COMPETITOR";
-                updateSignUpButtonState();
-            }
-        });
     }
 
     private void setupWardSpinner() {
@@ -125,8 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
         ArrayAdapter<String> loadingAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
-                loadingList
-        );
+                loadingList);
         loadingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wardSpinner.setAdapter(loadingAdapter);
         wardSpinner.setEnabled(false);
@@ -145,8 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         SignUpActivity.this,
                         android.R.layout.simple_spinner_item,
-                        wardNames
-                );
+                        wardNames);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 wardSpinner.setAdapter(adapter);
                 wardSpinner.setEnabled(true);
@@ -172,18 +138,17 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(SignUpActivity.this, 
-                        "Không thể tải danh sách phường/xã: " + error, 
+                Toast.makeText(SignUpActivity.this,
+                        "Không thể tải danh sách phường/xã: " + error,
                         Toast.LENGTH_SHORT).show();
-                
+
                 // Show error state
                 List<String> errorList = new ArrayList<>();
                 errorList.add("Lỗi tải dữ liệu");
                 ArrayAdapter<String> errorAdapter = new ArrayAdapter<>(
                         SignUpActivity.this,
                         android.R.layout.simple_spinner_item,
-                        errorList
-                );
+                        errorList);
                 errorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 wardSpinner.setAdapter(errorAdapter);
                 wardSpinner.setEnabled(false);
@@ -209,8 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
                         birthdayTextView.setText(sdf.format(selectedBirthday));
                         updateSignUpButtonState();
                     },
-                    year, month, day
-            );
+                    year, month, day);
             datePickerDialog.show();
         });
     }
@@ -219,7 +183,8 @@ public class SignUpActivity extends AppCompatActivity {
         togglePasswordVisibility.setOnClickListener(v -> {
             isPasswordVisible = !isPasswordVisible;
             if (isPasswordVisible) {
-                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                passwordEditText
+                        .setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 togglePasswordVisibility.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
             } else {
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -231,10 +196,12 @@ public class SignUpActivity extends AppCompatActivity {
         toggleConfirmPasswordVisibility.setOnClickListener(v -> {
             isConfirmPasswordVisible = !isConfirmPasswordVisible;
             if (isConfirmPasswordVisible) {
-                confirmPasswordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                confirmPasswordEditText
+                        .setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 toggleConfirmPasswordVisibility.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
             } else {
-                confirmPasswordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                confirmPasswordEditText
+                        .setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 toggleConfirmPasswordVisibility.setImageResource(android.R.drawable.ic_menu_view);
             }
             confirmPasswordEditText.setSelection(confirmPasswordEditText.getText().length());
@@ -244,10 +211,12 @@ public class SignUpActivity extends AppCompatActivity {
     private void setupTextWatchers() {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -266,16 +235,18 @@ public class SignUpActivity extends AppCompatActivity {
         // Add real-time password match validation
         confirmPasswordEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String password = passwordEditText.getText().toString().trim();
                 String confirmPassword = confirmPasswordEditText.getText().toString().trim();
-                
+
                 if (!confirmPassword.isEmpty() && !password.equals(confirmPassword)) {
                     confirmPasswordEditText.setError("Passwords do not match");
                 } else {
@@ -384,8 +355,8 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onSuccess(String message) {
                         runOnUiThread(() -> {
                             setLoading(false);
-                            Toast.makeText(SignUpActivity.this, 
-                                    "Registration successful! Please login.", 
+                            Toast.makeText(SignUpActivity.this,
+                                    "Registration successful! Please login.",
                                     Toast.LENGTH_LONG).show();
                             startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                             finish();
@@ -396,13 +367,12 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onError(Exception e) {
                         runOnUiThread(() -> {
                             setLoading(false);
-                            Toast.makeText(SignUpActivity.this, 
-                                    "Registration failed: " + e.getMessage(), 
+                            Toast.makeText(SignUpActivity.this,
+                                    "Registration failed: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         });
                     }
-                }
-        );
+                });
     }
 
     private void setLoading(boolean loading) {
@@ -418,6 +388,5 @@ public class SignUpActivity extends AppCompatActivity {
         wardSpinner.setEnabled(!loading);
         gradeEditText.setEnabled(!loading);
         birthdayTextView.setEnabled(!loading);
-        roleSpinner.setEnabled(!loading);
     }
 }

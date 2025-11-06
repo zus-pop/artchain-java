@@ -209,17 +209,12 @@
                 android:layout_marginEnd="4dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Role Spinner -->
+        <!-- Role Spinner - Hidden -->
         <Spinner
             android:id="@+id/roleSpinner"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/rounded_input_field"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordContainer" />
@@ -243,7 +238,7 @@
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roleSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordContainer" />
 
         <!-- School Name -->
         <EditText
