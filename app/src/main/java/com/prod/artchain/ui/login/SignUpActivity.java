@@ -2,6 +2,8 @@ package com.prod.artchain.ui.login;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -40,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText schoolNameEditText;
     private Spinner wardSpinner;
-    private EditText gradeEditText;
+    private Spinner gradeSpinner;
     private TextView birthdayTextView;
     private Button signUpButton;
     private ProgressBar loadingProgressBar;
@@ -51,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Date selectedBirthday = null;
     private String selectedRole = "COMPETITOR"; // Default role
     private String selectedWard = "";
+    private String selectedGrade = "";
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
     private List<Ward> wardList = new ArrayList<>();
@@ -63,10 +66,12 @@ public class SignUpActivity extends AppCompatActivity {
 
         initializeViews();
         setupWardSpinner();
+        setupGradeSpinner();
         setupDatePicker();
         setupPasswordToggle();
         setupTextWatchers();
         setupButtons();
+        updateSignUpButtonState();
     }
 
     private void initializeViews() {
@@ -77,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email);
         schoolNameEditText = findViewById(R.id.schoolName);
         wardSpinner = findViewById(R.id.wardSpinner);
-        gradeEditText = findViewById(R.id.grade);
+        gradeSpinner = findViewById(R.id.grade);
         birthdayTextView = findViewById(R.id.birthday);
         signUpButton = findViewById(R.id.signUpButton);
         loadingProgressBar = findViewById(R.id.loading);
@@ -156,6 +161,39 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void setupGradeSpinner() {
+        List<String> grades = new ArrayList<>();
+        grades.add("Choose grade");
+        for (int i = 1; i <= 9; i++) {
+            grades.add(String.valueOf(i));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                grades);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gradeSpinner.setAdapter(adapter);
+
+        gradeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    selectedGrade = grades.get(position);
+                } else {
+                    selectedGrade = "";
+                }
+                updateSignUpButtonState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedGrade = "";
+                updateSignUpButtonState();
+            }
+        });
+    }
+
     private void setupDatePicker() {
         birthdayTextView.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -230,7 +268,6 @@ public class SignUpActivity extends AppCompatActivity {
         fullNameEditText.addTextChangedListener(textWatcher);
         emailEditText.addTextChangedListener(textWatcher);
         schoolNameEditText.addTextChangedListener(textWatcher);
-        gradeEditText.addTextChangedListener(textWatcher);
 
         // Add real-time password match validation
         confirmPasswordEditText.addTextChangedListener(new TextWatcher() {
@@ -272,7 +309,6 @@ public class SignUpActivity extends AppCompatActivity {
         String fullName = fullNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String schoolName = schoolNameEditText.getText().toString().trim();
-        String grade = gradeEditText.getText().toString().trim();
 
         boolean isValid = !username.isEmpty()
                 && !password.isEmpty()
@@ -283,10 +319,17 @@ public class SignUpActivity extends AppCompatActivity {
                 && selectedBirthday != null
                 && !schoolName.isEmpty()
                 && !selectedWard.isEmpty()
-                && !grade.isEmpty()
+                && !selectedGrade.isEmpty()
                 && !isLoading;
 
         signUpButton.setEnabled(isValid);
+
+        // Change button background tint based on enabled state
+        if (isValid) {
+            signUpButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E22B2B")));
+        } else {
+            signUpButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+        }
     }
 
     private boolean validateInputs() {
@@ -336,7 +379,7 @@ public class SignUpActivity extends AppCompatActivity {
         String fullName = fullNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String schoolName = schoolNameEditText.getText().toString().trim();
-        String grade = gradeEditText.getText().toString().trim();
+        String grade = selectedGrade;
 
         setLoading(true);
 
@@ -377,8 +420,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void setLoading(boolean loading) {
         isLoading = loading;
+        updateSignUpButtonState();
         loadingProgressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-        signUpButton.setEnabled(!loading);
         usernameEditText.setEnabled(!loading);
         passwordEditText.setEnabled(!loading);
         confirmPasswordEditText.setEnabled(!loading);
@@ -386,7 +429,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailEditText.setEnabled(!loading);
         schoolNameEditText.setEnabled(!loading);
         wardSpinner.setEnabled(!loading);
-        gradeEditText.setEnabled(!loading);
+        gradeSpinner.setEnabled(!loading);
         birthdayTextView.setEnabled(!loading);
     }
 }

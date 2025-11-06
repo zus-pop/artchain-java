@@ -49,7 +49,7 @@ public class CompetitorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.competitor_menu, menu);
         return true;
     }
 
