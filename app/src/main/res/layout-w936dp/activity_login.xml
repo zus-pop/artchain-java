@@ -57,7 +57,7 @@
             android:minHeight="50dp"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
-            app:cornerRadius="20dp"
+            app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
