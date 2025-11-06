@@ -33,7 +33,9 @@ public class EvaluationApiService {
         String paintingId = json.getString("paintingId");
         String examinerId = json.getString("examinerId");
         String examinerName = json.getString("examinerName");
-        int score = json.getInt("score");
+        int score = 0;
+        if (!json.getString("scoreRound1").equals("null"))
+            score = json.getInt("scoreRound1");
         String feedback = json.getString("feedback");
         String evaluationDateStr = json.getString("evaluationDate");
         String status = json.getString("status");
@@ -51,7 +53,7 @@ public class EvaluationApiService {
                 .paintingId(paintingId)
                 .examinerId(examinerId)
                 .examinerName(examinerName)
-                .score(score)
+                .scoreRound1(score)
                 .feedback(feedback)
                 .evaluationDate(evaluationDate)
                 .status(status)

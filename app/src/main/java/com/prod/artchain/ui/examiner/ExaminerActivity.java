@@ -18,6 +18,7 @@ import com.prod.artchain.data.service.SubmissionApiService;
 import com.prod.artchain.ui.login.LoginActivity;
 import com.prod.artchain.data.local.TokenManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ExaminerActivity extends AppCompatActivity {
@@ -101,6 +102,11 @@ public class ExaminerActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     ContestAdapter adapter = new ContestAdapter(ExaminerActivity.this, contests);
                     listView.setAdapter(adapter);
+                    // Reset click listener for contests
+                    listView.setOnItemClickListener((parent, view, position, id) -> {
+                        Contest selectedContest = contests.get(position);
+                        loadSubmissionsForContest(selectedContest.getContestId());
+                    });
                 });
             }
 
@@ -114,7 +120,11 @@ public class ExaminerActivity extends AppCompatActivity {
     }
 
     private void loadSubmissionsForContest(String contestId) {
-        SubmissionApiService.getInstance().getSubmissionsByContestIdAsync(contestId, new SubmissionApiService.SubmissionCallback() {
+        var filters = new HashMap<String, String>();
+        filters.put("roundName", "ROUND_1");
+        filters.put("status", "ACCEPTED");
+        filters.put("examinerId", TokenManager.getInstance(this).getUser().getUserId());
+        SubmissionApiService.getInstance().getSubmissionsByContestIdAsync(contestId, filters, new SubmissionApiService.SubmissionCallback() {
             @Override
             public void onSuccess(List<Submission> submissions) {
                 runOnUiThread(() -> {
