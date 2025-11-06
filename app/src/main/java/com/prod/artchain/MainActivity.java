@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
                     TextView mainText = findViewById(R.id.loadingTextView);
                     String message = "Failed to load user data: " + e.getMessage();
                     mainText.setText(message);
+                    TokenManager.getInstance(MainActivity.this).clearToken();
+                    HttpClient.getInstance().clearAuthToken();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
                 });
             }
         });
