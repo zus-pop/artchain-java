@@ -48,36 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> <!-- Ràng buộc với đỉnh màn hình -->
 
-    <!-- 3. PHẦN HƯỚNG DẪN ĐĂNG KÝ -->
-    <LinearLayout
-        android:id="@+id/signup_link_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_title">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Don't have an account?"
-            android:textColor="#555555"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/signup_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Sign up"
-            android:textColor="#E22B2B"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:clickable="true"
-            android:focusable="true" />
-    </LinearLayout>
-
     <!-- 4. TRƯỜNG NHẬP LIỆU TÊN NGƯỜI DÙNG (Username/Phone) -->
     <EditText
         android:id="@+id/username"
@@ -95,7 +65,7 @@
         android:background="@drawable/rounded_input_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_link_container" />
+        app:layout_constraintTop_toBottomOf="@+id/login_title" />
 
     <!-- 5. TRƯỜNG NHẬP LIỆU MẬT KHẨU -->
     <RelativeLayout
