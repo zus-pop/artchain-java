@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 public class WardApiService {
     private static final String TAG = "WardApiService";
-    private static final String WARD_API_URL = "https://provinces.open-api.vn/api/w/?province=79";
+    private static final String WARD_API_URL = "https://provinces.open-api.vn/api/v2/w/?province=79";
     private static final OkHttpClient client = new OkHttpClient();
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());

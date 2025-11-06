@@ -275,20 +275,16 @@
             app:layout_constraintTop_toBottomOf="@+id/schoolName" />
 
         <!-- Grade -->
-        <EditText
+        <Spinner
             android:id="@+id/grade"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:hint="Grade"
-            android:textColorHint="#A0A0A0"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:background="@drawable/rounded_input_field"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wardSpinner" />

@@ -17,7 +17,7 @@
 android:id="@+id/tv_welcome_title"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:text="Chào mừng bạn đến với Artchain!"
+android:text="Welcome to Artchain!"
 android:textSize="32sp"
 android:textColor="@android:color/white"
 android:textStyle="bold"
@@ -27,20 +27,20 @@ android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_instruction"
-        android:layout_width="wrap_content"
+        android:layout_width="302dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="81dp"
+        android:layout_marginStart="54dp"
         android:layout_marginTop="213dp"
-        android:layout_marginEnd="85dp"
+        android:layout_marginEnd="54dp"
         android:layout_marginBottom="489dp"
         android:gravity="center"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="Vuốt để tiếp tục > > >"
+        android:text="Slide left to continue"
         android:textColor="@android:color/white"
         android:textSize="22sp" />
 

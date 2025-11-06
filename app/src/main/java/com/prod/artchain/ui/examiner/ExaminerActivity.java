@@ -34,11 +34,6 @@ public class ExaminerActivity extends AppCompatActivity {
         // Set title
         setTitle("Contests to Evaluate");
 
-        // Enable back button
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Set auth handler for token expiration
         HttpClient.getInstance().setAuthHandler(() -> {
             runOnUiThread(() -> {
@@ -63,7 +58,7 @@ public class ExaminerActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.examiner_menu, menu);
         return true;
     }
 
