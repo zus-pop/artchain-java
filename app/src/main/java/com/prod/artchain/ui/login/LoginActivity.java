@@ -11,9 +11,11 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prod.artchain.MainActivity;
+import com.prod.artchain.R;
 import com.prod.artchain.databinding.ActivityLoginBinding;
 import com.prod.artchain.data.service.AuthApiService;
 import com.prod.artchain.data.local.TokenManager;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private TextView signUpLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +51,18 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = binding.username;
         passwordEditText = binding.password;
         loginButton = binding.login;
+        signUpLink = findViewById(R.id.signUpLink);
         final ProgressBar loadingProgressBar = binding.loading;
 
         // TextWatcher to enable/disable login button based on input
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -68,6 +74,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initial state
         updateLoginButtonState();
+
+        // Sign Up link click listener
+        signUpLink.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        });
 
         loginButton.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
@@ -85,12 +96,14 @@ public class LoginActivity extends AppCompatActivity {
                         // Save access token
                         tokenManager.saveToken(user.getAccessToken());
                         String roleStr = user.getRole() != null ? user.getRole().toString() : "No Role";
-                        Toast.makeText(LoginActivity.this, "Logged in as " + user.getFullName() + " (" + roleStr + ")", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Logged in as " + user.getFullName() + " (" + roleStr + ")",
+                                Toast.LENGTH_LONG).show();
                         // Proceed to MainActivity
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     });
                 }
+
                 @Override
                 public void onError(Exception e) {
                     runOnUiThread(() -> {

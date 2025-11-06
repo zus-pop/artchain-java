@@ -21,6 +21,12 @@ public class AuthApiService {
         void onError(Exception e);
     }
 
+    public interface RegisterCallback {
+        void onSuccess(String message);
+
+        void onError(Exception e);
+    }
+
     // Singleton instance for reusability
     private static AuthApiService instance;
 
@@ -28,7 +34,8 @@ public class AuthApiService {
     }
 
     public static AuthApiService getInstance() {
-        if (instance == null) instance = new AuthApiService();
+        if (instance == null)
+            instance = new AuthApiService();
         return instance;
     }
 
@@ -130,6 +137,48 @@ public class AuthApiService {
             }
         });
     }
+
+    public void registerAsync(String username, String password, String fullName,
+            String email, String role, Date birthday,
+            String schoolName, String ward, String grade,
+            RegisterCallback callback) {
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+            jsonBody.put("fullName", fullName);
+            jsonBody.put("email", email);
+            jsonBody.put("role", role);
+
+            // Format birthday to ISO 8601 format
+            if (birthday != null) {
+                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                jsonBody.put("birthday", isoFormat.format(birthday));
+            }
+
+            jsonBody.put("schoolName", schoolName);
+            jsonBody.put("ward", ward);
+            jsonBody.put("grade", grade);
+
+            HttpClient.getInstance().post("/auth/register", jsonBody, new HttpClient.HttpCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        String message = jsonResponse.optString("message", "Registration successful");
+                        callback.onSuccess(message);
+                    } catch (JSONException e) {
+                        callback.onError(new Exception("Failed to parse registration response: " + e.getMessage(), e));
+                    }
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    callback.onError(e);
+                }
+            });
+        } catch (JSONException e) {
+            callback.onError(e);
+        }
+    }
 }
-
-
