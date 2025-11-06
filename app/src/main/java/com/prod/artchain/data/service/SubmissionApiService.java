@@ -1,5 +1,7 @@
 package com.prod.artchain.data.service;
 
+import android.util.Log;
+
 import com.prod.artchain.data.model.Contest;
 import com.prod.artchain.data.model.Submission;
 import com.prod.artchain.data.remote.HttpClient;
@@ -49,7 +51,10 @@ public class SubmissionApiService {
         String updatedAtStr = json.getString("updatedAt");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-        Date submissionDate = sdf.parse(submissionDateStr);
+        Date submissionDate = null;
+        if (!submissionDateStr.equals("null")) {
+            submissionDate = sdf.parse(submissionDateStr);
+        }
         Date createdAt = sdf.parse(createdAtStr);
         Date updatedAt = sdf.parse(updatedAtStr);
 
@@ -129,12 +134,14 @@ public class SubmissionApiService {
         });
     }
 
-    public void getSubmissionsByContestIdAsync(String contestId, SubmissionCallback callback) {
-        HttpClient.getInstance().get("/paintings?contestId=" + contestId, new HttpClient.HttpCallback() {
+    public void getSubmissionsByContestIdAsync(String contestId, Map<String, String> filters, SubmissionCallback callback) {
+        String query = buildQueryString(contestId, filters);
+        HttpClient.getInstance().get("/paintings?" + query, new HttpClient.HttpCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("paintings");
                     List<Submission> submissions = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject json = jsonArray.getJSONObject(i);
@@ -143,6 +150,7 @@ public class SubmissionApiService {
                     }
                     callback.onSuccess(submissions);
                 } catch (Exception e) {
+                    Log.d("ERR: ", e.getMessage());
                     callback.onError(new Exception("Failed to parse submissions: " + e.getMessage(), e));
                 }
             }
@@ -176,5 +184,15 @@ public class SubmissionApiService {
                 callback.onError(e);
             }
         });
+    }
+
+    private String buildQueryString(String contestId, Map<String, String> filters) {
+        StringBuilder sb = new StringBuilder("contestId=").append(contestId);
+        if (filters != null) {
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                sb.append("&").append(entry.getKey()).append("=").append(entry.getValue());
+            }
+        }
+        return sb.toString();
     }
 }

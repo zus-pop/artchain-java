@@ -2,6 +2,7 @@ package com.prod.artchain.ui.competitor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,11 +111,29 @@ public class ContestDetailActivity extends AppCompatActivity {
         }
 
         participateButton.setOnClickListener(v -> {
-            // Start upload activity
-            Intent intent = new Intent(this, UploadActivity.class);
-            intent.putExtra("contestId", contest.getContestId());
-            intent.putExtra("roundId", contest.getRoundId()); // Default round
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(this, UploadActivity.class);
+                intent.putExtra("contestId", contest.getContestId());
+                intent.putExtra(
+                        "roundId",
+                        contest
+                                .getRounds()
+                                .stream()
+                                .filter(
+                                        r -> r
+                                                .getName()
+                                                .equals("ROUND_1"))
+                                .findFirst()
+                                .orElseThrow()
+                                .getRoundId()
+                                .toString()
+                                ); // Default round
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(ContestDetailActivity.this, "Error starting upload: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
         });
     }
 

@@ -56,7 +56,7 @@ public class EvaluationAdapter extends BaseAdapter {
         examinerName.setText(evaluation.getExaminerName() != null ? evaluation.getExaminerName() : context.getString(R.string.n_a));
 
         // Score
-        score.setText(context.getString(R.string.score_label, evaluation.getScore()));
+        score.setText(context.getString(R.string.score_label, evaluation.getScoreRound1()));
 
         // Feedback
         feedback.setText(evaluation.getFeedback() != null ? evaluation.getFeedback() : context.getString(R.string.no_feedback));

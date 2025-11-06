@@ -1,6 +1,9 @@
 package com.prod.artchain.data.service;
 
+import android.util.Log;
+
 import com.prod.artchain.data.model.Contest;
+import com.prod.artchain.data.model.Round;
 import com.prod.artchain.data.remote.HttpClient;
 
 import org.json.JSONArray;
@@ -33,6 +36,38 @@ public class ContestApiService {
         return instance;
     }
 
+    private Round parseRoundFromJson(JSONObject json) throws Exception {
+        int roundId = json.getInt("roundId");
+        int contestId = json.getInt("contestId");
+        String name = json.getString("name");
+        String table = json.getString("table");
+        String startDate = json.getString("startDate");
+        String endDate = json.getString("endDate");
+        String status = json.getString("status");
+        String submissionDeadline = json.getString("submissionDeadline");
+        String resultAnnounceDate = json.getString("resultAnnounceDate");
+        String sendOriginalDeadline = json.getString("sendOriginalDeadline");
+        String createdAt = json.getString("createdAt");
+        String updatedAt = json.getString("updatedAt");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+
+        return Round.builder()
+                .roundId(roundId)
+                .contestId(contestId)
+                .name(name)
+                .table(table)
+                .startDate(startDate)
+                .endDate(endDate)
+                .status(status)
+                .submissionDeadline(submissionDeadline)
+                .resultAnnounceDate(resultAnnounceDate)
+                .sendOriginalDeadline(sendOriginalDeadline)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
+    }
+
     private Contest parseContestFromJson(JSONObject json) throws Exception {
         String id = json.getString("contestId"); // Assuming contestId is the id
         String title = json.getString("title");
@@ -43,8 +78,16 @@ public class ContestApiService {
         String endDateStr = json.getString("endDate");
         String status = json.getString("status");
         String createdBy = json.optString("createdBy", "");
-        String roundId = json.optString("roundId", "");
+        List<Round> rounds = new ArrayList<>();
 
+        if (json.has("rounds")) {
+        JSONArray roundsArr = json.getJSONArray("rounds");
+            for (int i = 0; i < roundsArr.length(); i++) {
+                JSONObject jsonRound = roundsArr.getJSONObject(i);
+                Round round = parseRoundFromJson(jsonRound);
+                rounds.add(round);
+            }
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
         Date startDate = sdf.parse(startDateStr);
         Date endDate = sdf.parse(endDateStr);
@@ -59,7 +102,7 @@ public class ContestApiService {
             .endDate(endDate)
             .status(status)
             .createdBy(createdBy)
-            .roundId(roundId)
+            .rounds(rounds)
             .build();
     }
 

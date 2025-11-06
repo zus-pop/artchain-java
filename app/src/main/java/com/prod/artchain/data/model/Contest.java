@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -26,5 +27,5 @@ public class Contest implements Serializable {
     private Date endDate;
     private String status;
     private String createdBy;
-    private String roundId;
+    private List<Round> rounds;
 }

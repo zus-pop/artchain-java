@@ -20,7 +20,7 @@ public class Evaluation {
     private String paintingId;
     private String examinerId;
     private String examinerName;
-    private int score;
+    private int scoreRound1;
     private String feedback;
     private Date evaluationDate;
     private String status;
